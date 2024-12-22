@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  control_de_acceso:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: control_de_acceso
+    ports:
+      - "8081:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  vigilancia_y_monitoreo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vigilancia_y_monitoreo
+    ports:
+      - "8082:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  supervision_perimetral:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: supervision_perimetral
+    ports:
+      - "8083:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  alarmas_y_respuesta:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: alarmas_y_respuesta
+    ports:
+      - "8084:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  gestion_de_emergencias:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gestion_de_emergencias
+    ports:
+      - "8085:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  reportes_y_auditoria:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reportes_y_auditoria
+    ports:
+      - "8086:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  gestion_personal_seguridad:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gestion_personal_seguridad
+    ports:
+      - "8087:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  integracion_tecnologica:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: integracion_tecnologica
+    ports:
+      - "8088:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  deteccion_y_prevencion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: deteccion_y_prevencion
+    ports:
+      - "8089:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  comunicacion_y_notificaciones:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: comunicacion_y_notificaciones
+    ports:
+      - "8090:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  deteccion_amenazas_ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: deteccion_amenazas_ai
+    ports:
+      - "8091:8080"
+    networks:
+      - integrated_security_network
+    depends_on:
+      - database
+
+  database:
+    image: oracle/database:19.3.0-ee
+    container_name: oracle_db
+    environment:
+      - ORACLE_PASSWORD=yourpassword
+      - ORACLE_SID=ORCL
+    ports:
+      - "1521:1521"
+    networks:
+      - integrated_security_network
+    volumes:
+      - db_data:/opt/oracle/oradata
+
+networks:
+  integrated_security_network:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
